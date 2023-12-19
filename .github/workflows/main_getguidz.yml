@@ -42,4 +42,19 @@ jobs:
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CF90D868353649F38B6D41E728C7C126 }}
           scm-do-build-during-deployment: false
+
+      - name: 'Delay Deployment'
+        run: |
+          Start-Sleep -Seconds 60
+        shell: pwsh
+
+      - name: 'Azure Deployment'
+        uses: Azure/RmWebAppDeployment@4
+        with:
+          ConnectionType: 'AzureRM'
+          azureSubscription: 'your-subscription'
+          appType: 'webApp'
+          WebAppName: 'your-web-app-name'
+          packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+          condition: succeededOrFailed()
           enable-oryx-build: false
