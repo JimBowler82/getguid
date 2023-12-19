@@ -48,13 +48,4 @@ jobs:
           Start-Sleep -Seconds 60
         shell: pwsh
 
-      - name: 'Azure Deployment'
-        uses: Azure/RmWebAppDeployment@4
-        with:
-          ConnectionType: 'AzureRM'
-          azureSubscription: 'your-subscription'
-          appType: 'webApp'
-          WebAppName: 'your-web-app-name'
-          packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-          condition: succeededOrFailed()
-          enable-oryx-build: false
+      
